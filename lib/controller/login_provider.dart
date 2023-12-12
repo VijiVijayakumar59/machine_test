@@ -14,7 +14,6 @@ class LoginProvider with ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
-      // Save login state to SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('isLoggedIn', true);
 
