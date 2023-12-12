@@ -1,4 +1,4 @@
-// ignore_for_file: sort_child_properties_last
+// ignore_for_file: sort_child_properties_last, unused_local_variable
 
 import 'package:flutter/material.dart';
 
@@ -14,10 +14,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var items = [
     'Prod TEST',
-    'Documents',
   ];
+  
   @override
   Widget build(BuildContext context) {
+    // var box = Hive.box<Dashboard>('dashboardBox');
     return SafeArea(
       child: Scaffold(
         drawer: Drawer(

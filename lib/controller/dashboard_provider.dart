@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:machinetest/model/hive_model.dart';
 
 class DashboardProvider {
-  Future<List<String>> fetchDashboardItems() async {
+  Future<List<Dashboard>> fetchDashboardItems() async {
     const url =
         'https://mobile.inaxus.com/api/Common/ContentCache?Email=teganpricecaplangold@gmail.com&Password=Paperless@2021&DatabaseName=InaxusV5&ProjectID=2';
 
@@ -14,7 +15,14 @@ class DashboardProvider {
 
         if (data.containsKey('ModuleLists')) {
           final List<dynamic> moduleLists = data['ModuleLists'];
-          return moduleLists.cast<String>();
+          final List<Dashboard> dashboards = moduleLists
+              .map((module) => Dashboard(
+                    moduleId: module['ModuleId'],
+                    moduleName: module['ModuleName'],
+                  ))
+              .toList();
+
+          return dashboards;
         } else {
           throw Exception('ModuleLists not found in API response');
         }
