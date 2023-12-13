@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:machinetest/model/hive_model.dart';
@@ -22,7 +23,7 @@ class DashboardProvider with ChangeNotifier {
                     moduleName: module['ModuleName'],
                   ))
               .toList();
-
+          log(moduleLists.toString());
           return dashboards;
         } else {
           throw Exception('ModuleLists not found in API response');

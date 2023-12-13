@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Hive.registerAdapter(DashboardAdapter());
   await Hive.initFlutter();
   var box = await Hive.openBox<Dashboard>('dashboardBox');
   var dashboardProvider = DashboardProvider();
@@ -17,7 +18,7 @@ void main() async {
   var dashboards = await dashboardProvider.fetchDashboardItems();
   box.addAll(dashboards);
 
-  await box.close();
+  // await box.close();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
   runApp(MyApp(isLoggedIn: isLoggedIn));
