@@ -1,11 +1,10 @@
-// ignore_for_file: sort_child_properties_last, unused_local_variable
-
-import 'dart:developer';
+// ignore_for_file: sort_child_properties_last, unused_local_variable, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:machinetest/controller/dashboard_provider.dart';
 import 'package:machinetest/model/hive_model.dart';
+import 'package:machinetest/view/home/dashboard_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -110,14 +109,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Icon(Icons.dashboard_outlined, color: Colors.orange),
                 title: const Text('Dashboard'),
                 onTap: () {
-                  ListView.builder(
-                      itemCount: dashboards.length,
-                      itemBuilder: (context, index) {
-                        final dashboard = dashboards[index];
-                        return ListTile(
-                          title: Text(dashboard.moduleName!),
-                        );
-                      });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          DashboardPage(dashboards: dashboards),
+                    ),
+                  );
                 },
               ),
               ListTile(
