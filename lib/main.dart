@@ -12,13 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Hive.registerAdapter(DashboardAdapter());
   await Hive.initFlutter();
-  var box = await Hive.openBox<Dashboard>('dashboardBox');
-  var dashboardProvider = DashboardProvider();
-
-  var dashboards = await dashboardProvider.fetchDashboardItems();
-  box.addAll(dashboards);
-
-  // await box.close();
+  await Hive.openBox<DashboardHive>('dashboardss');
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
   runApp(MyApp(isLoggedIn: isLoggedIn));

@@ -6,24 +6,24 @@ part of 'hive_model.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class DashboardAdapter extends TypeAdapter<Dashboard> {
+class DashboardAdapter extends TypeAdapter<DashboardHive> {
   @override
   final int typeId = 0;
 
   @override
-  Dashboard read(BinaryReader reader) {
+  DashboardHive read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Dashboard(
+    return DashboardHive(
       moduleId: fields[0] as int?,
       moduleName: fields[1] as String?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Dashboard obj) {
+  void write(BinaryWriter writer, DashboardHive obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)

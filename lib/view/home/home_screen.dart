@@ -1,7 +1,6 @@
 // ignore_for_file: sort_child_properties_last, unused_local_variable, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:machinetest/controller/dashboard_provider.dart';
 import 'package:machinetest/model/hive_model.dart';
 import 'package:machinetest/view/home/dashboard_screen.dart';
@@ -20,37 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
     'Prod TEST',
   ];
   final DashboardProvider dashboardProvider = DashboardProvider();
-  late List<Dashboard> dashboards = [];
-
-  @override
-  void initState() {
-    super.initState();
-    openHiveBox();
-    loadDashboardItems();
-  }
-
-  Future<void> openHiveBox() async {
-    await Hive.openBox<Dashboard>('dashboardBox');
-  }
-
-  Future<void> loadDashboardItems() async {
-    try {
-      dashboards = await dashboardProvider.fetchDashboardItems();
-      var box = Hive.box<Dashboard>('dashboardBox');
-      box.addAll(dashboards);
-      List<Dashboard> fetchedDashboards =
-          await dashboardProvider.fetchDashboardItems();
-      setState(() {
-        dashboards = fetchedDashboards;
-      });
-    } catch (error) {
-      print('Error loading dashboard items: $error');
-    }
-  }
+  late List<DashboardHive> dashboards = [];
 
   @override
   Widget build(BuildContext context) {
-    // var box = Hive.box<Dashboard>('dashboardBox');
     return SafeArea(
       child: Scaffold(
         drawer: Drawer(
@@ -112,8 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          DashboardPage(dashboards: dashboards),
+                      builder: (context) => const DashboardPage(),
                     ),
                   );
                 },
