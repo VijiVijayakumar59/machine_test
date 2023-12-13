@@ -1,6 +1,9 @@
 // ignore_for_file: sort_child_properties_last, unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:machinetest/controller/dashboard_provider.dart';
+import 'package:machinetest/model/hive_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,7 +18,35 @@ class _HomeScreenState extends State<HomeScreen> {
   var items = [
     'Prod TEST',
   ];
-  
+  final DashboardProvider dashboardProvider = DashboardProvider();
+  late List<Dashboard> dashboards = [];
+
+  @override
+  void initState() {
+    super.initState();
+    openHiveBox();
+    loadDashboardItems();
+  }
+
+  Future<void> openHiveBox() async {
+    await Hive.openBox<Dashboard>('dashboardBox');
+  }
+
+  Future<void> loadDashboardItems() async {
+    try {
+      dashboards = await dashboardProvider.fetchDashboardItems();
+      var box = Hive.box<Dashboard>('dashboardBox');
+      box.addAll(dashboards);
+      List<Dashboard> fetchedDashboards =
+          await dashboardProvider.fetchDashboardItems();
+      setState(() {
+        dashboards = fetchedDashboards;
+      });
+    } catch (error) {
+      print('Error loading dashboard items: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // var box = Hive.box<Dashboard>('dashboardBox');
@@ -76,7 +107,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading:
                     const Icon(Icons.dashboard_outlined, color: Colors.orange),
                 title: const Text('Dashboard'),
-                onTap: () {},
+                onTap: () {
+                  ListView.builder(
+                      itemCount: dashboards.length,
+                      itemBuilder: (context, index) {
+                        final dashboard = dashboards[index];
+                        return ListTile(
+                          title: Text(dashboard.moduleName!),
+                        );
+                      });
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.folder_copy_outlined,

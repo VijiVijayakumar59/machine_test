@@ -10,14 +10,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Hive.initFlutter();
-  // var box = await Hive.openBox<Dashboard>('dashboardBox');
-  // var dashboardProvider = DashboardProvider();
+  await Hive.initFlutter();
+  var box = await Hive.openBox<Dashboard>('dashboardBox');
+  var dashboardProvider = DashboardProvider();
 
-  // var dashboards = await dashboardProvider.fetchDashboardItems();
-  // box.addAll(dashboards);
+  var dashboards = await dashboardProvider.fetchDashboardItems();
+  box.addAll(dashboards);
 
-  // await box.close();
+  await box.close();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
   runApp(MyApp(isLoggedIn: isLoggedIn));
@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => DashboardProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

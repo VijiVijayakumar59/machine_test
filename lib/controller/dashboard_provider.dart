@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:machinetest/model/hive_model.dart';
 
-class DashboardProvider {
-  Future<List<Dashboard>> fetchDashboardItems() async {
+class DashboardProvider with ChangeNotifier {
+  fetchDashboardItems() async {
     const url =
         'https://mobile.inaxus.com/api/Common/ContentCache?Email=teganpricecaplangold@gmail.com&Password=Paperless@2021&DatabaseName=InaxusV5&ProjectID=2';
 
@@ -13,8 +14,8 @@ class DashboardProvider {
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
 
-        if (data.containsKey('ModuleLists')) {
-          final List<dynamic> moduleLists = data['ModuleLists'];
+        if (data.containsKey('ModuleList')) {
+          final List<dynamic> moduleLists = data['ModuleList'];
           final List<Dashboard> dashboards = moduleLists
               .map((module) => Dashboard(
                     moduleId: module['ModuleId'],
