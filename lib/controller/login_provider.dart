@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:machinetest/controller/dashboard_provider.dart';
 import 'package:machinetest/view/home/home_screen.dart';
@@ -10,14 +12,15 @@ import 'package:http/http.dart' as http;
 class LoginProvider with ChangeNotifier {
   Future<void> login(
       BuildContext context, String email, String password) async {
-        
     final response = await http.get(
       Uri.parse(
         "https://mobile.inaxus.com/api/Account/Login?Email=$email&Password=$password",
       ),
     );
-    print(response);
+    print(response.statusCode);
     if (response.statusCode == 200) {
+      // log(response);
+      print(response);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('isLoggedIn', true);
       final provider = Provider.of<DashboardProvider>(context, listen: false);

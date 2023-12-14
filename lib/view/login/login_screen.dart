@@ -66,8 +66,8 @@ class LoginScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    log("$formKey.currentState!.validate()");
-                    if (formKey.currentState!.validate()) {
+                    if (emailController.text.length > 0 &&
+                        passwordController.text.length > 0) {
                       loginProvider.login(
                         context,
                         emailController.text.trim(),
