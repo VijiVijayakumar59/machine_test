@@ -10,12 +10,13 @@ import 'package:http/http.dart' as http;
 class LoginProvider with ChangeNotifier {
   Future<void> login(
       BuildContext context, String email, String password) async {
+        
     final response = await http.get(
       Uri.parse(
         "https://mobile.inaxus.com/api/Account/Login?Email=$email&Password=$password",
       ),
     );
-
+    print(response);
     if (response.statusCode == 200) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('isLoggedIn', true);

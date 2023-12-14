@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:machinetest/controller/login_provider.dart';
 import 'package:machinetest/view/login/widget/textform_widget.dart';
@@ -64,11 +66,15 @@ class LoginScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    loginProvider.login(
-                      context,
-                      emailController.text.trim(),
-                      passwordController.text.trim(),
-                    );
+                    log("$formKey.currentState!.validate()");
+                    if (formKey.currentState!.validate()) {
+                      loginProvider.login(
+                        context,
+                        emailController.text.trim(),
+                        passwordController.text.trim(),
+                      );
+                      log("validation success");
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     shadowColor: null,
