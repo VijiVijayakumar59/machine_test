@@ -18,7 +18,7 @@ class LoginProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('isLoggedIn', true);
-      final provider = Provider.of<DashboardProvider>(context, listen: true);
+      final provider = Provider.of<DashboardProvider>(context, listen: false);
       await provider.fetchDashboardItems();
       Navigator.push(
         context,
