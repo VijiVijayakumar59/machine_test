@@ -6,10 +6,12 @@ class TextFormWidget extends StatelessWidget {
     this.prefixIcon,
     required this.placeHolder,
     required this.textcontroller,
+    this.validator,
   });
   final IconData? prefixIcon;
   final String? placeHolder;
   final TextEditingController textcontroller;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
